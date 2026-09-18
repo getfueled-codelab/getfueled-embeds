@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Warm intro paths</title>
+<title>Warm paths</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,82 +17,111 @@
     --shadow-rest: 0 1px 3px rgba(0,0,0,0.05);
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: var(--surface); }
+  html, body { margin: 0; padding: 0; background: transparent; }
   body {
     font-family: Inter, -apple-system, 'system-ui', 'Segoe UI', Roboto, sans-serif;
-    color: var(--ink-body); font-size: 15px; line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
+    color: var(--ink-body); font-size: 14px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased; padding: 3px;
   }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 20px 16px 32px; }
-  .overline { font-size: 11px; font-weight: 600; letter-spacing: .06em;
-    text-transform: uppercase; color: var(--ink-caption); }
-  h1 { font-size: 24px; font-weight: 600; color: var(--ink-title); margin: 2px 0 2px; }
-  .routecount { font-size: 13px; color: var(--ink-caption); margin: 0 0 20px; }
-  h2 { font-size: 20px; font-weight: 600; color: var(--ink-title); margin: 28px 0 4px; }
-  .explain { font-size: 14px; color: var(--ink-caption); margin: 0 0 14px; max-width: 60ch; }
   .card { background: var(--surface); border: 1px solid var(--hairline);
-    border-radius: 12px; box-shadow: var(--shadow-rest); padding: 20px 20px 16px;
-    margin-bottom: 12px; }
-  .chain { display: flex; align-items: flex-start; padding: 16px 2px 6px; }
-  .node { flex: 1 1 96px; min-width: 0; max-width: 130px; display: flex;
+    border-radius: 12px; box-shadow: var(--shadow-rest);
+    padding: 12px 16px 12px; max-width: 680px; margin: 0 auto; }
+
+  .top { display: flex; align-items: center; justify-content: space-between;
+    gap: 8px; }
+  .chip { display: inline-block; background: var(--sunken);
+    border: 1px solid var(--hairline); color: var(--ink-body);
+    font-size: 11px; font-weight: 600; letter-spacing: .02em;
+    padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+  .nav { display: flex; align-items: center; gap: 6px; }
+  .count { font-size: 12px; color: var(--ink-caption);
+    font-variant-numeric: tabular-nums; min-width: 44px; text-align: center; }
+  .arrow { width: 28px; height: 28px; border-radius: 999px; border: 1px solid var(--hairline);
+    background: var(--surface); color: var(--ink-body); font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; padding: 0; line-height: 1; }
+  .arrow:hover:not(:disabled) { background: var(--sunken); }
+  .arrow:disabled { opacity: .3; cursor: default; }
+
+  .slide { transition: opacity .16s ease, transform .16s ease; }
+  .slide.out { opacity: 0; transform: translateX(6px); }
+
+  .chain { display: flex; align-items: flex-start; padding: 14px 2px 4px; }
+  .node { flex: 1 1 96px; min-width: 0; max-width: 150px; display: flex;
     flex-direction: column; align-items: center; text-align: center; }
-  .avatar { width: 44px; height: 44px; display: flex; align-items: center;
-    justify-content: center; font-size: 14px; font-weight: 600; flex: 0 0 auto; }
+  .avatar { width: 40px; height: 40px; display: flex; align-items: center;
+    justify-content: center; font-size: 13px; font-weight: 600; flex: 0 0 auto; }
   .avatar.team { border-radius: 999px; background: var(--signal-tint);
     border: 1.5px solid var(--signal); color: var(--signal-deep); }
   .avatar.person { border-radius: 999px; background: var(--sunken);
     border: 1px solid var(--hairline); color: var(--ink-body); }
   .avatar.investor { border-radius: 10px; background: #161616; color: #fff; }
-  .node .nm { margin: 8px -12px 0; font-size: 14px; font-weight: 600;
+  .avatar.company { border-radius: 10px; background: var(--sunken);
+    border: 1px solid var(--hairline); color: var(--ink-caption); }
+  .node .nm { margin: 7px -12px 0; font-size: 13px; font-weight: 600;
     color: var(--ink-title); line-height: 1.3; overflow-wrap: break-word; }
-  .node .rl { margin: 2px -12px 0; font-size: 12px; color: var(--ink-caption);
+  .node .rl { margin: 1px -12px 0; font-size: 11.5px; color: var(--ink-caption);
     line-height: 1.3; overflow-wrap: break-word; }
-  .link { flex: 1 1 56px; position: relative; height: 44px; min-width: 26px;
+  .node:first-child .nm, .node:first-child .rl { margin-left: 0; }
+  .node:last-child .nm, .node:last-child .rl { margin-right: 0; }
+  .link { flex: 1 1 48px; position: relative; height: 40px; min-width: 24px;
     margin: 0 4px; }
-  .link .lbl { position: absolute; left: -14px; right: -14px; bottom: 25px;
-    max-height: 30px; overflow: hidden; display: flex; align-items: flex-end;
-    justify-content: center; text-align: center; font-size: 12px;
-    color: var(--ink-caption); line-height: 1.25; }
-  .link .line { position: absolute; left: 0; right: 0; top: 21px;
+  .link .lbl { position: absolute; left: -14px; right: -14px; bottom: 23px;
+    max-height: 28px; overflow: hidden; display: flex; align-items: flex-end;
+    justify-content: center; text-align: center; font-size: 11.5px;
+    color: var(--ink-caption); line-height: 1.2; }
+  .link .line { position: absolute; left: 0; right: 0; top: 19px;
     border-top: 2px solid rgba(0,0,0,0.14); }
   .link .line.dashed { border-top-style: dashed; }
-  .foot { display: flex; align-items: center; gap: 16px;
-    border-top: 1px solid var(--hairline); margin-top: 14px; padding-top: 14px; }
-  .foot .txt { flex: 1 1 auto; font-size: 14px; }
-  .foot .txt b { font-weight: 600; color: var(--ink-title); }
+
+  .foot { display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; border-top: 1px solid var(--hairline); margin-top: 10px;
+    padding-top: 10px; }
+  .fact { font-size: 12.5px; color: var(--ink-caption); min-width: 0; }
   .btn { flex: 0 0 auto; display: inline-block; background: var(--signal-tint);
-    color: var(--signal-deep); font-size: 13px; font-weight: 600;
-    padding: 9px 14px; border-radius: 9px; text-decoration: none;
+    color: var(--signal-deep); font-size: 12.5px; font-weight: 600;
+    padding: 7px 12px; border-radius: 9px; text-decoration: none;
     white-space: nowrap; }
   .btn:hover { background: #e3edf9; }
+
   .empty { border: 1px dashed var(--hairline); border-radius: 12px;
-    padding: 32px 20px; text-align: center; margin-top: 12px; }
-  .empty .t { font-size: 15px; font-weight: 600; color: var(--ink-title); }
-  .empty .s { font-size: 13px; color: var(--ink-caption); margin-top: 4px; }
-  .loading { padding: 40px 20px; text-align: center; color: var(--ink-caption);
-    font-size: 13px; }
-  @media (max-width: 480px) {
-    .wrap { padding: 14px 10px 26px; }
-    .card { padding: 14px 10px 12px; }
-    .node { flex-basis: 66px; max-width: 96px; }
-    .avatar { width: 36px; height: 36px; font-size: 12px; }
-    .link { height: 36px; min-width: 20px; margin: 0 2px; }
-    .link .line { top: 17px; }
-    .link .lbl { bottom: 21px; font-size: 10px; max-height: 26px;
+    background: var(--surface); padding: 22px 16px; text-align: center;
+    max-width: 680px; margin: 0 auto; }
+  .empty .t { font-size: 13.5px; font-weight: 600; color: var(--ink-title); }
+  .empty .s { font-size: 12.5px; color: var(--ink-caption); margin-top: 3px; }
+  .loading { padding: 26px 16px; text-align: center; color: var(--ink-caption);
+    font-size: 12.5px; }
+
+  @media (max-width: 420px) {
+    .card { padding: 10px 10px 10px; }
+    .node { flex-basis: 64px; max-width: 100px; }
+    .avatar { width: 34px; height: 34px; font-size: 12px; }
+    .link { height: 34px; min-width: 18px; margin: 0 2px; }
+    .link .line { top: 16px; }
+    .link .lbl { bottom: 20px; font-size: 10px; max-height: 24px;
       left: -10px; right: -10px; }
     .node .nm { font-size: 12px; }
-    .node .rl { font-size: 11px; }
-    .foot { flex-wrap: wrap; }
+    .node .rl { font-size: 10.5px; }
+    .foot { gap: 8px; }
+    .fact { font-size: 11.5px; }
+    .btn { font-size: 11.5px; padding: 6px 10px; }
   }
 </style>
 </head>
 <body>
-<div class="wrap" id="app"><div class="loading">Loading warm paths…</div></div>
+<div id="app"><div class="loading">Loading…</div></div>
 <script>
 (function () {
   "use strict";
 
   var app = document.getElementById("app");
+
+  var BUILDING_SVG =
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" ' +
+    'stroke="currentColor" stroke-width="1.7" stroke-linecap="round" ' +
+    'stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M3 21h18M5 21V6.5L12 4v17M12 21h7V10l-7-2.2"/>' +
+    '<path d="M8 9h.01M8 12.5h.01M8 16h.01M15.5 13h.01M15.5 16h.01"/></svg>';
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -101,114 +130,176 @@
   }
 
   function message(title, sub) {
-    app.innerHTML = '<div class="empty" style="margin-top:24px"><div class="t">' +
-      esc(title) + '</div><div class="s">' + esc(sub) + "</div></div>";
+    app.innerHTML = '<div class="empty"><div class="t">' + esc(title) +
+      '</div><div class="s">' + esc(sub) + "</div></div>";
   }
 
-  function initials(first, last, full) {
+  function personInitials(first, last, full) {
     var f = (first || full || "?").trim();
-    var l = (last || "").trim();
-    var b = l.charAt(0) || ((full || "").split(/\s+/)[1] || "").charAt(0) || "";
+    var b = (last || "").trim().charAt(0) ||
+      ((full || "").split(/\s+/)[1] || "").charAt(0) || "";
     return ((f.charAt(0) + b).toUpperCase()) || "?";
   }
 
-  function connectorInitials(connector) {
-    var people = connector.split(/[&+,]| and /i).map(function (p) { return p.trim(); }).filter(Boolean);
-    if (people.length > 1) {
-      return people.map(function (p) { return p.charAt(0).toUpperCase(); }).join("").slice(0, 3) || "?";
+  // Split a connector cell into individual people ("Joris & Bart" is one cell
+  // in older data; newer data has one full name per row).
+  function splitConnectors(s) {
+    return String(s || "").split(/[&+,]| and /i)
+      .map(function (p) { return p.trim(); }).filter(Boolean);
+  }
+
+  function firstName(name) {
+    return (name.split(/\s+/)[0] || name);
+  }
+
+  function connectorDisplay(names) {
+    if (names.length === 0) return { label: "Your team", initials: "?" };
+    if (names.length === 1) {
+      var words = names[0].split(/\s+/).filter(Boolean);
+      var lastInitial = words.length > 1 ? words[words.length - 1].charAt(0) : "";
+      return {
+        label: names[0],
+        initials: (words[0].charAt(0) + lastInitial).toUpperCase(),
+      };
     }
-    var words = (people[0] || "").split(/\s+/).filter(Boolean);
-    if (!words.length) return "?";
-    var last = words.length > 1 ? words[words.length - 1].charAt(0) : "";
-    return (words[0].charAt(0) + last).toUpperCase();
+    return {
+      label: names.map(firstName).join(" & "),
+      initials: names.map(function (n) { return n.charAt(0).toUpperCase(); })
+        .join("").slice(0, 3),
+    };
   }
 
-  function midLabel(r) {
-    if (r.tier === 1) return { label: "works at", dashed: false };
-    if (r.tier === 2) return { label: "works at", dashed: true };
-    if (r.tier === 3) return { label: "founded portfolio co.", dashed: true };
-    return { label: "works at portfolio co.", dashed: true };
+  // One card per person per investor: merge connectors, keep the most
+  // informative variant (in-database beats not, founder beats employee).
+  function dedupe(rows) {
+    var byPerson = {};
+    var order = [];
+    rows.forEach(function (r) {
+      var key = String(r.full_name || "").trim().toLowerCase()
+        .replace(/,?\s*(phd|md|mba|msc|dr\.?)\.?$/i, "").trim();
+      if (!key) return;
+      if (!Object.prototype.hasOwnProperty.call(byPerson, key)) {
+        byPerson[key] = { rows: [], connectors: [], connectorKeys: {} };
+        order.push(key);
+      }
+      var g = byPerson[key];
+      g.rows.push(r);
+      splitConnectors(r.connector).forEach(function (name) {
+        var ck = name.toLowerCase();
+        if (!g.connectorKeys[ck]) { g.connectorKeys[ck] = true; g.connectors.push(name); }
+      });
+    });
+    return order.map(function (key) {
+      var g = byPerson[key];
+      g.rows.sort(function (a, b) { return (a.tier || 9) - (b.tier || 9); });
+      var best = g.rows[0];
+      var withUrl = g.rows.filter(function (r) { return (r.linkedin_url || "").trim(); })[0];
+      var withCo = g.rows.filter(function (r) { return (r.portfolio_company || "").trim(); })[0];
+      var withTitle = g.rows.filter(function (r) { return (r.job_title || "").trim(); })[0];
+      return {
+        tier: best.tier,
+        group: best.tier <= 2 ? "direct" : "portfolio",
+        full_name: best.full_name,
+        first_name: best.first_name,
+        last_name: best.last_name,
+        job_title: withTitle ? withTitle.job_title : "",
+        linkedin_url: withUrl ? withUrl.linkedin_url : "",
+        portfolio_company: withCo ? withCo.portfolio_company : "",
+        investor_name: best.investor_name || "",
+        connectors: g.connectors,
+      };
+    }).sort(function (a, b) {
+      if (a.group !== b.group) return a.group === "direct" ? -1 : 1;
+      return a.full_name.localeCompare(b.full_name);
+    });
   }
 
-  function linkedinHref(r, investorName) {
-    var url = (r.linkedin_url || "").trim();
+  function linkedinHref(c) {
+    var url = (c.linkedin_url || "").trim();
     if (/^https:\/\/([a-z0-9-]+\.)?linkedin\.com\//i.test(url)) return url;
-    var kw = (r.full_name + " " + (r.portfolio_company || investorName)).trim();
+    var kw = (c.full_name + " " + (c.portfolio_company || c.investor_name || "")).trim();
     return "https://www.linkedin.com/search/results/people/?keywords=" + encodeURIComponent(kw);
   }
 
-  function routeSentence(r, investorName) {
-    var who = esc(r.connector || "Your team");
-    var nm = esc(r.full_name);
-    var inv = esc(investorName);
-    var co = esc((r.portfolio_company || "").trim());
-    if (r.tier === 1) {
-      return "<b>Strongest route.</b> " + who + " knows " + nm +
-        ", who is in your contact database and works at " + inv + ".";
+  function endNode(c) {
+    if (c.group === "direct") {
+      return '<div class="node"><div class="avatar investor">' +
+        esc((c.investor_name || "?").charAt(0).toUpperCase()) + "</div>" +
+        '<div class="nm">' + esc(c.investor_name || "Investor") + "</div></div>";
     }
-    if (r.tier === 2) {
-      return "<b>Strong route, no contact details on file yet.</b> " + who + " knows " + nm +
-        ", who works at " + inv + ". Reach them through " + who + "&#39;s LinkedIn network.";
-    }
-    if (r.tier === 3) {
-      return "<b>Founder route.</b> " + who + " knows " + nm + ", founder of " +
-        (co || "a company") + " in " + inv +
-        "&#39;s portfolio. A warm word from a portfolio founder carries weight.";
-    }
-    return "<b>Portfolio route.</b> " + who + " knows " + nm + ", who works at " +
-      (co || "a company") + " backed by " + inv + ".";
+    var co = (c.portfolio_company || "").trim();
+    return '<div class="node"><div class="avatar company">' + BUILDING_SVG + "</div>" +
+      '<div class="nm">' + esc(co || "Portfolio company") + "</div>" +
+      (co ? '<div class="rl">portfolio company</div>' : "") + "</div>";
   }
 
-  function chainCard(r, investorName) {
-    var mid = midLabel(r);
-    var conn = (r.connector || "Team").trim();
-    return '<div class="card"><div class="chain">' +
-      '<div class="node"><div class="avatar team">' + esc(connectorInitials(conn)) + "</div>" +
-      '<div class="nm">' + esc(conn) + '</div><div class="rl">your team</div></div>' +
+  function cardHtml(c, idx, total) {
+    var conn = connectorDisplay(c.connectors);
+    var secondLabel = c.tier === 3 ? "founded" : "works at";
+    var dashed = c.tier !== 1;
+    var chipText = c.group === "direct" ? "Direct connection" : "Portfolio connection";
+    var fact = c.tier === 1 ? "In your contact database" : "Not in your contact database yet";
+    var nav = total > 1 ?
+      '<div class="nav">' +
+      '<button class="arrow" id="prev" aria-label="Previous"' + (idx === 0 ? " disabled" : "") + ">&#8249;</button>" +
+      '<span class="count">' + (idx + 1) + " / " + total + "</span>" +
+      '<button class="arrow" id="next" aria-label="Next"' + (idx === total - 1 ? " disabled" : "") + ">&#8250;</button>" +
+      "</div>" : "";
+    return '<div class="card"><div class="slide" id="slide">' +
+      '<div class="top"><span class="chip">' + chipText + "</span>" + nav + "</div>" +
+      '<div class="chain">' +
+      '<div class="node"><div class="avatar team">' + esc(conn.initials) + "</div>" +
+      '<div class="nm">' + esc(conn.label) + '</div><div class="rl">your team</div></div>' +
       '<div class="link"><div class="lbl">knows</div><div class="line"></div></div>' +
       '<div class="node"><div class="avatar person">' +
-      esc(initials(r.first_name, r.last_name, r.full_name)) + "</div>" +
-      '<div class="nm">' + esc(r.full_name) + '</div><div class="rl">' + esc(r.job_title || "") + "</div></div>" +
-      '<div class="link"><div class="lbl">' + esc(mid.label) + '</div><div class="line' +
-      (mid.dashed ? " dashed" : "") + '"></div></div>' +
-      '<div class="node"><div class="avatar investor">' +
-      esc((investorName || "?").charAt(0).toUpperCase()) + "</div>" +
-      '<div class="nm">' + esc(investorName) + '</div><div class="rl">target investor</div></div>' +
+      esc(personInitials(c.first_name, c.last_name, c.full_name)) + "</div>" +
+      '<div class="nm">' + esc(c.full_name) + '</div><div class="rl">' +
+      esc(c.job_title || "") + "</div></div>" +
+      '<div class="link"><div class="lbl">' + esc(secondLabel) + '</div>' +
+      '<div class="line' + (dashed ? " dashed" : "") + '"></div></div>' +
+      endNode(c) +
       "</div>" +
-      '<div class="foot"><div class="txt">' + routeSentence(r, investorName) + "</div>" +
-      '<a class="btn" href="' + esc(linkedinHref(r, investorName)) +
-      '" target="_blank" rel="noopener noreferrer">Find on LinkedIn</a></div></div>';
+      '<div class="foot"><span class="fact">' + esc(fact) + "</span>" +
+      '<a class="btn" href="' + esc(linkedinHref(c)) +
+      '" target="_blank" rel="noopener noreferrer">View on LinkedIn</a></div>' +
+      "</div></div>";
   }
 
-  function render(rows, investorUuid) {
-    if (!rows.length) {
-      app.innerHTML = '<div class="overline">Warm intro paths</div>' +
-        '<div class="empty"><div class="t">No warm paths mapped yet</div>' +
-        '<div class="s">Routes appear here as soon as a network scan finds a connection to this investor.</div></div>';
-      return;
-    }
-    var named = rows.filter(function (r) { return r.investor_name; })[0];
-    var investorName = (named && named.investor_name) || investorUuid;
-    var direct = rows.filter(function (r) { return r.tier <= 2; });
-    var portfolio = rows.filter(function (r) { return r.tier >= 3; });
-    var out = '<div class="overline">Warm intro paths</div>' +
-      "<h1>" + esc(investorName) + "</h1>" +
-      '<p class="routecount">' + rows.length + " warm " + (rows.length === 1 ? "route" : "routes") +
-      " through your team&#39;s network</p>";
-    if (direct.length) {
-      out += "<h2>Direct routes</h2>" +
-        '<p class="explain">People at ' + esc(investorName) +
-        " that your team is connected to. Dashed lines mean the person is known but their contact details are not in your database yet.</p>" +
-        direct.map(function (r) { return chainCard(r, investorName); }).join("");
-    }
-    if (portfolio.length) {
-      out += "<h2>Portfolio routes</h2>" +
-        '<p class="explain">People your team knows who founded or work at companies ' +
-        esc(investorName) + " has backed. An intro can travel through the portfolio to the investor.</p>" +
-        portfolio.map(function (r) { return chainCard(r, investorName); }).join("");
-    }
-    app.innerHTML = out;
+  var cards = [];
+  var idx = 0;
+
+  function show(newIdx, animate) {
+    idx = Math.max(0, Math.min(cards.length - 1, newIdx));
+    var paint = function () {
+      app.innerHTML = cardHtml(cards[idx], idx, cards.length);
+      var prev = document.getElementById("prev");
+      var next = document.getElementById("next");
+      if (prev) prev.onclick = function () { show(idx - 1, true); };
+      if (next) next.onclick = function () { show(idx + 1, true); };
+    };
+    if (!animate) return paint();
+    var slide = document.getElementById("slide");
+    if (slide) slide.className = "slide out";
+    setTimeout(paint, 90);
   }
+
+  document.addEventListener("keydown", function (e) {
+    if (!cards.length) return;
+    if (e.key === "ArrowLeft") show(idx - 1, true);
+    if (e.key === "ArrowRight") show(idx + 1, true);
+  });
+
+  var touchX = null;
+  document.addEventListener("touchstart", function (e) {
+    touchX = e.touches[0].clientX;
+  }, { passive: true });
+  document.addEventListener("touchend", function (e) {
+    if (touchX == null || !cards.length) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (dx > 40) show(idx - 1, true);
+    if (dx < -40) show(idx + 1, true);
+  }, { passive: true });
 
   var qp = new URLSearchParams(location.search);
   var client = (qp.get("client") || "").trim();
@@ -238,7 +329,13 @@
     })
     .then(function (data) {
       if (!data) return;
-      render(data.rows || [], investor);
+      cards = dedupe(data.rows || []);
+      if (!cards.length) {
+        message("No mapped connections yet",
+          "Your team's network scan has not found a path to this investor so far.");
+        return;
+      }
+      show(0, false);
     })
     .catch(function () {
       message("Something went wrong", "Please try again in a moment.");
