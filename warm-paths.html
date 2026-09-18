@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Warm intro paths</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink-title: rgba(0,0,0,0.95); --ink-body: rgba(0,0,0,0.62);
+    --ink-caption: rgba(0,0,0,0.45); --ink-faint: rgba(0,0,0,0.30);
+    --hairline: rgba(0,0,0,0.08); --surface: #ffffff; --sunken: #f7f7f7;
+    --signal: #2a78d6; --signal-deep: #1d5aa8; --signal-tint: #eef3fb;
+    --shadow-rest: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--surface); }
+  body {
+    font-family: Inter, -apple-system, 'system-ui', 'Segoe UI', Roboto, sans-serif;
+    color: var(--ink-body); font-size: 15px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 20px 16px 32px; }
+  .overline { font-size: 11px; font-weight: 600; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--ink-caption); }
+  h1 { font-size: 24px; font-weight: 600; color: var(--ink-title); margin: 2px 0 2px; }
+  .routecount { font-size: 13px; color: var(--ink-caption); margin: 0 0 20px; }
+  h2 { font-size: 20px; font-weight: 600; color: var(--ink-title); margin: 28px 0 4px; }
+  .explain { font-size: 14px; color: var(--ink-caption); margin: 0 0 14px; max-width: 60ch; }
+  .card { background: var(--surface); border: 1px solid var(--hairline);
+    border-radius: 12px; box-shadow: var(--shadow-rest); padding: 20px 20px 16px;
+    margin-bottom: 12px; }
+  .chain { display: flex; align-items: flex-start; padding: 16px 2px 6px; }
+  .node { flex: 1 1 96px; min-width: 0; max-width: 130px; display: flex;
+    flex-direction: column; align-items: center; text-align: center; }
+  .avatar { width: 44px; height: 44px; display: flex; align-items: center;
+    justify-content: center; font-size: 14px; font-weight: 600; flex: 0 0 auto; }
+  .avatar.team { border-radius: 999px; background: var(--signal-tint);
+    border: 1.5px solid var(--signal); color: var(--signal-deep); }
+  .avatar.person { border-radius: 999px; background: var(--sunken);
+    border: 1px solid var(--hairline); color: var(--ink-body); }
+  .avatar.investor { border-radius: 10px; background: #161616; color: #fff; }
+  .node .nm { margin-top: 8px; font-size: 14px; font-weight: 600;
+    color: var(--ink-title); line-height: 1.3; max-width: 100%;
+    overflow-wrap: anywhere; }
+  .node .rl { margin-top: 2px; font-size: 12px; color: var(--ink-caption);
+    line-height: 1.3; max-width: 100%; overflow-wrap: anywhere; }
+  .link { flex: 1 1 56px; position: relative; height: 44px; min-width: 26px;
+    margin: 0 4px; }
+  .link .lbl { position: absolute; left: -14px; right: -14px; bottom: 25px;
+    max-height: 30px; overflow: hidden; display: flex; align-items: flex-end;
+    justify-content: center; text-align: center; font-size: 12px;
+    color: var(--ink-caption); line-height: 1.25; }
+  .link .line { position: absolute; left: 0; right: 0; top: 21px;
+    border-top: 2px solid rgba(0,0,0,0.14); }
+  .link .line.dashed { border-top-style: dashed; }
+  .foot { display: flex; align-items: center; gap: 16px;
+    border-top: 1px solid var(--hairline); margin-top: 14px; padding-top: 14px; }
+  .foot .txt { flex: 1 1 auto; font-size: 14px; }
+  .foot .txt b { font-weight: 600; color: var(--ink-title); }
+  .btn { flex: 0 0 auto; display: inline-block; background: var(--signal-tint);
+    color: var(--signal-deep); font-size: 13px; font-weight: 600;
+    padding: 9px 14px; border-radius: 9px; text-decoration: none;
+    white-space: nowrap; }
+  .btn:hover { background: #e3edf9; }
+  .empty { border: 1px dashed var(--hairline); border-radius: 12px;
+    padding: 32px 20px; text-align: center; margin-top: 12px; }
+  .empty .t { font-size: 15px; font-weight: 600; color: var(--ink-title); }
+  .empty .s { font-size: 13px; color: var(--ink-caption); margin-top: 4px; }
+  .loading { padding: 40px 20px; text-align: center; color: var(--ink-caption);
+    font-size: 13px; }
+  @media (max-width: 480px) {
+    .wrap { padding: 14px 10px 26px; }
+    .card { padding: 14px 10px 12px; }
+    .node { flex-basis: 66px; max-width: 96px; }
+    .avatar { width: 36px; height: 36px; font-size: 12px; }
+    .link { height: 36px; min-width: 20px; margin: 0 2px; }
+    .link .line { top: 17px; }
+    .link .lbl { bottom: 21px; font-size: 10px; max-height: 26px;
+      left: -10px; right: -10px; }
+    .node .nm { font-size: 12px; }
+    .node .rl { font-size: 11px; }
+    .foot { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"><div class="loading">Loading warm paths…</div></div>
+<script>
+(function () {
+  "use strict";
+
+  var app = document.getElementById("app");
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function message(title, sub) {
+    app.innerHTML = '<div class="empty" style="margin-top:24px"><div class="t">' +
+      esc(title) + '</div><div class="s">' + esc(sub) + "</div></div>";
+  }
+
+  function initials(first, last, full) {
+    var f = (first || full || "?").trim();
+    var l = (last || "").trim();
+    var b = l.charAt(0) || ((full || "").split(/\s+/)[1] || "").charAt(0) || "";
+    return ((f.charAt(0) + b).toUpperCase()) || "?";
+  }
+
+  function connectorInitials(connector) {
+    var people = connector.split(/[&+,]| and /i).map(function (p) { return p.trim(); }).filter(Boolean);
+    if (people.length > 1) {
+      return people.map(function (p) { return p.charAt(0).toUpperCase(); }).join("").slice(0, 3) || "?";
+    }
+    var words = (people[0] || "").split(/\s+/).filter(Boolean);
+    if (!words.length) return "?";
+    var last = words.length > 1 ? words[words.length - 1].charAt(0) : "";
+    return (words[0].charAt(0) + last).toUpperCase();
+  }
+
+  function midLabel(r) {
+    if (r.tier === 1) return { label: "works at", dashed: false };
+    if (r.tier === 2) return { label: "works at", dashed: true };
+    if (r.tier === 3) return { label: "founded portfolio co.", dashed: true };
+    return { label: "works at portfolio co.", dashed: true };
+  }
+
+  function linkedinHref(r, investorName) {
+    var url = (r.linkedin_url || "").trim();
+    if (/^https:\/\/([a-z0-9-]+\.)?linkedin\.com\//i.test(url)) return url;
+    var kw = (r.full_name + " " + (r.portfolio_company || investorName)).trim();
+    return "https://www.linkedin.com/search/results/people/?keywords=" + encodeURIComponent(kw);
+  }
+
+  function routeSentence(r, investorName) {
+    var who = esc(r.connector || "Your team");
+    var nm = esc(r.full_name);
+    var inv = esc(investorName);
+    var co = esc((r.portfolio_company || "").trim());
+    if (r.tier === 1) {
+      return "<b>Strongest route.</b> " + who + " knows " + nm +
+        ", who is in your contact database and works at " + inv + ".";
+    }
+    if (r.tier === 2) {
+      return "<b>Strong route, no contact details on file yet.</b> " + who + " knows " + nm +
+        ", who works at " + inv + ". Reach them through " + who + "&#39;s LinkedIn network.";
+    }
+    if (r.tier === 3) {
+      return "<b>Founder route.</b> " + who + " knows " + nm + ", founder of " +
+        (co || "a company") + " in " + inv +
+        "&#39;s portfolio. A warm word from a portfolio founder carries weight.";
+    }
+    return "<b>Portfolio route.</b> " + who + " knows " + nm + ", who works at " +
+      (co || "a company") + " backed by " + inv + ".";
+  }
+
+  function chainCard(r, investorName) {
+    var mid = midLabel(r);
+    var conn = (r.connector || "Team").trim();
+    return '<div class="card"><div class="chain">' +
+      '<div class="node"><div class="avatar team">' + esc(connectorInitials(conn)) + "</div>" +
+      '<div class="nm">' + esc(conn) + '</div><div class="rl">your team</div></div>' +
+      '<div class="link"><div class="lbl">knows</div><div class="line"></div></div>' +
+      '<div class="node"><div class="avatar person">' +
+      esc(initials(r.first_name, r.last_name, r.full_name)) + "</div>" +
+      '<div class="nm">' + esc(r.full_name) + '</div><div class="rl">' + esc(r.job_title || "") + "</div></div>" +
+      '<div class="link"><div class="lbl">' + esc(mid.label) + '</div><div class="line' +
+      (mid.dashed ? " dashed" : "") + '"></div></div>' +
+      '<div class="node"><div class="avatar investor">' +
+      esc((investorName || "?").charAt(0).toUpperCase()) + "</div>" +
+      '<div class="nm">' + esc(investorName) + '</div><div class="rl">target investor</div></div>' +
+      "</div>" +
+      '<div class="foot"><div class="txt">' + routeSentence(r, investorName) + "</div>" +
+      '<a class="btn" href="' + esc(linkedinHref(r, investorName)) +
+      '" target="_blank" rel="noopener noreferrer">Find on LinkedIn</a></div></div>';
+  }
+
+  function render(rows, investorUuid) {
+    if (!rows.length) {
+      app.innerHTML = '<div class="overline">Warm intro paths</div>' +
+        '<div class="empty"><div class="t">No warm paths mapped yet</div>' +
+        '<div class="s">Routes appear here as soon as a network scan finds a connection to this investor.</div></div>';
+      return;
+    }
+    var named = rows.filter(function (r) { return r.investor_name; })[0];
+    var investorName = (named && named.investor_name) || investorUuid;
+    var direct = rows.filter(function (r) { return r.tier <= 2; });
+    var portfolio = rows.filter(function (r) { return r.tier >= 3; });
+    var out = '<div class="overline">Warm intro paths</div>' +
+      "<h1>" + esc(investorName) + "</h1>" +
+      '<p class="routecount">' + rows.length + " warm " + (rows.length === 1 ? "route" : "routes") +
+      " through your team&#39;s network</p>";
+    if (direct.length) {
+      out += "<h2>Direct routes</h2>" +
+        '<p class="explain">People at ' + esc(investorName) +
+        " that your team is connected to. Dashed lines mean the person is known but their contact details are not in your database yet.</p>" +
+        direct.map(function (r) { return chainCard(r, investorName); }).join("");
+    }
+    if (portfolio.length) {
+      out += "<h2>Portfolio routes</h2>" +
+        '<p class="explain">People your team knows who founded or work at companies ' +
+        esc(investorName) + " has backed. An intro can travel through the portfolio to the investor.</p>" +
+        portfolio.map(function (r) { return chainCard(r, investorName); }).join("");
+    }
+    app.innerHTML = out;
+  }
+
+  var qp = new URLSearchParams(location.search);
+  var client = (qp.get("client") || "").trim();
+  var investor = (qp.get("investor") || "").trim();
+  var token = (qp.get("token") || "").trim();
+
+  if (!client || !investor || !token) {
+    message("Missing link details",
+      "This embed needs client, investor and token parameters. Rebuild the URL in the Glide template column.");
+    return;
+  }
+
+  var apiOrigin = /\.supabase\./.test(location.origin) ? location.origin
+    : "https://xnfczguftihnetbfrvmy.supabase.co";
+  var apiUrl = apiOrigin + "/functions/v1/warm-paths?" +
+    new URLSearchParams({ client: client, investor: investor, token: token }).toString();
+
+  fetch(apiUrl)
+    .then(function (res) {
+      if (res.status === 403) {
+        message("This link is not valid",
+          "The access token does not match this client. Check the token column in Glide or rotate the client token.");
+        return null;
+      }
+      if (!res.ok) throw new Error("api " + res.status);
+      return res.json();
+    })
+    .then(function (data) {
+      if (!data) return;
+      render(data.rows || [], investor);
+    })
+    .catch(function () {
+      message("Something went wrong", "Please try again in a moment.");
+    });
+})();
+</script>
+</body>
+</html>
