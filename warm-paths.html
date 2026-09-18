@@ -78,7 +78,7 @@
     gap: 12px; border-top: 1px solid var(--hairline); margin-top: 10px;
     padding-top: 10px; }
   .fact { font-size: 12.5px; color: var(--ink-caption); min-width: 0; }
-  .btn { flex: 0 0 auto; display: inline-block; background: var(--signal-tint);
+  .btn { flex: 0 0 auto; margin-left: auto; display: inline-block; background: var(--signal-tint);
     color: var(--signal-deep); font-size: 12.5px; font-weight: 600;
     padding: 7px 12px; border-radius: 9px; text-decoration: none;
     white-space: nowrap; }
@@ -238,7 +238,7 @@
     var secondLabel = c.tier === 3 ? "founded" : "works at";
     var dashed = c.tier !== 1;
     var chipText = c.group === "direct" ? "Direct connection" : "Portfolio connection";
-    var fact = c.tier === 1 ? "In your contact database" : "Not in your contact database yet";
+    var fact = c.tier === 1 ? "In your contact database" : "";
     var nav = total > 1 ?
       '<div class="nav">' +
       '<button class="arrow" id="prev" aria-label="Previous"' + (idx === 0 ? " disabled" : "") + ">&#8249;</button>" +
@@ -259,7 +259,7 @@
       '<div class="line' + (dashed ? " dashed" : "") + '"></div></div>' +
       endNode(c) +
       "</div>" +
-      '<div class="foot"><span class="fact">' + esc(fact) + "</span>" +
+      '<div class="foot">' + (fact ? '<span class="fact">' + esc(fact) + "</span>" : "") +
       '<a class="btn" href="' + esc(linkedinHref(c)) +
       '" target="_blank" rel="noopener noreferrer">View on LinkedIn</a></div>' +
       "</div></div>";
